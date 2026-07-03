@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玩卡半生，归来还是GG</title>
+    <style>
+        :root {
+            --bg-color: #0d0e12;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --gg-pink: #f40057;
+            --gg-blue: #00daff;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(244, 0, 87, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 218, 255, 0.05) 0%, transparent 40%);
+        }
+
+        /* 背景微弱网格，增加科技质感 */
+        body::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.005) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.005) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        /* 核心标志性卡片 */
+        .main-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 50px 40px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .main-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gg-pink), var(--gg-blue));
+        }
+
+        .main-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* 头部徽章 */
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 100px;
+            background: rgba(244, 0, 87, 0.1);
+            border: 1px solid rgba(244, 0, 87, 0.2);
+            color: var(--gg-pink);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        /* 主标题 */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, #a5a5a5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 副标题/打字机效果 */
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            line-height: 1.6;
+            min-height: 2.4rem;
+        }
+
+        /* 核心优势网格 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px 15px;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(0, 218, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .feature-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .feature-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* 传送门按钮 */
+        .enter-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            color: #000;
+            padding: 14px 36px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        .enter-btn:hover {
+            background: var(--gg-pink);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(244, 0, 87, 0.4);
+            transform: scale(1.02);
+        }
+
+        .enter-btn svg {
+            margin-left: 8px;
+            transition: transform 0.2s ease;
+        }
+
+        .enter-btn:hover svg {
+            transform: translateX(4px);
+        }
+
+        /* 页脚 */
+        footer {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 0.5px;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .features { grid-template-columns: 1fr; }
+            .main-card { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="main-card">
+            <div class="badge">SIM Card Odyssey</div>
+<div class="badge">SIM卡奥德赛</div>
+            
+            <h1>玩卡半生，归来还是 GG</h1>
+            
+            <div class="subtitle" id="typed-text"></div>
+            
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">💰</div>
+                    <div class="feature-title">零月租焦虑</div>
+                    <div class="feature-desc">半年动一次，几毛钱无限续期</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🛰️</div>
+                    <div class="feature-title">漫游稳如狗</div>
+                    <div class="feature-desc">国内双公网接码，永不失联</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🕊️</div>
+                    <div class="feature-title">纯粹与自由</div>
+                    <div class="feature-desc">无实名门槛，返璞归真的选择</div>
+                </div>
+            </div>
+            
+            <a href="https://51.shuka.xyz/" class="enter-btn" target="_blank">
+                向省心妥协，点击进入
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+        </div>
+        
+        <footer>致敬所有在数字游民路上折腾过的老哥们</footer>
+    </div>
+
+    <script>
+        const textArray = [
+            "历经各种“神卡”的风控与月租洗礼...",
+            "才发现，最朴实无华的，依然是角落里那张 giffgaff。",
+            "折腾的是乐趣，留下的是生活。欢迎回家。"
+        ];
+        let textIndex = 0;
+        let charIndex = 0;
+        const targetElement = document.getElementById("typed-text");
+
+        function type() {
+            if (charIndex < textArray[textIndex].length) {
+                targetElement.innerHTML += textArray[textIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, 50);
+            } else {
+                setTimeout(erase, 2500); // 停顿后开始删除
+            }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+                targetElement.innerHTML = textArray[textIndex].substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(erase, 30);
+            } else {
+                textIndex = (textIndex + 1) % textArray.length;
+                setTimeout(type, 500); // 停顿后打下一句
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(type, 1000);
+        });
+    </script>
+</body>
+</html>
